@@ -29,10 +29,10 @@ func main() {
 	var stockcodeArrayWg sync.WaitGroup
 	stocktran := new(mongodb.StockTran)
 
-	counterChan := make(chan int)
-	lastdayPriceChan := make(chan float32)
+	counterChan := make(chan int, 1)
 	dateChan := make(chan string)
-	recordChan := make(chan string)
+	lastdayPriceChan := make(chan float32, 1)
+	recordChan := make(chan string, 1)
 
 	unCompletedCounter := -1
 	for idx, stockcode := range stockcodeArray {
@@ -56,14 +56,14 @@ func main() {
 		// 获取每日交易数据
 		go func() {
 			for counter, date := range dateArray {
-				counterChan <- counter
-				dateChan <- date
 				go func() {
 					lastdayPriceChan <- netservice.MakeStockLastdayClosePrice(stockcode, date)
 				}()
 				go func() {
 					recordChan <- netservice.MakeXlsRecords(stockcode, date)
 				}()
+				counterChan <- counter
+				dateChan <- date
 			}
 		}()
 
@@ -72,7 +72,6 @@ func main() {
 
 			var date string
 			for unCompletedCounter != 0 {
-				counter := <-counterChan
 				stockcodeWg.Add(1)
 				go func() {
 					defer stockcodeWg.Done()
@@ -86,7 +85,10 @@ func main() {
 						stocktran = nil
 					}
 				}()
+
 				stockcodeWg.Wait()
+
+				counter := <-counterChan
 				if stocktran != nil {
 					mongodb.StoreStockTranDailyModel(stocktran)
 					log.Printf("     - %4d, %d\n", counter, date)

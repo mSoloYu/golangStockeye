@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+const commonDateLayout = "2006-01-02 15:04:05"
 const intDateLayout = "20060102"
 const hyphenDateLayout = "2006-01-02"
 
@@ -56,11 +57,12 @@ func generateNextDateChannel(startDate time.Time, ch chan string, wg sync.WaitGr
 	defer wg.Done()
 
 	now := time.Now()
-	if !(now.Hour() > 18 && now.Minute() > 15) {
+	if (now.Hour() > 18 && now.Minute() < 15) ||
+		(now.Hour() < 18) {
 		now = now.Add(negOneday)
 	}
 
-	nowStr := strings.Fields(now.Format("2006-01-02 15:04:05"))[0]
+	nowStr := strings.Fields(now.Format(commonDateLayout))[0]
 	log.Println("生成的日期截止于: ", nowStr)
 
 	beginDate, _ := time.Parse(hyphenDateLayout, dateBegin)
@@ -79,7 +81,7 @@ func generateNextDateChannel(startDate time.Time, ch chan string, wg sync.WaitGr
 			beginDate = beginDate.Add(oneday)
 		default:
 			if !isHoliday(beginDate) {
-				beginDateStr := strings.Fields(beginDate.Format("2006-01-02 15:04:05"))[0]
+				beginDateStr := strings.Fields(beginDate.Format(commonDateLayout))[0]
 				ch <- strings.Split(beginDateStr, " ")[0]
 			}
 			beginDate = beginDate.Add(oneday)
@@ -88,6 +90,15 @@ func generateNextDateChannel(startDate time.Time, ch chan string, wg sync.WaitGr
 	}
 
 	close(ch)
+
+}
+
+func IsToday(date string) bool {
+
+	now := time.Now()
+	nowStr := strings.Fields(now.Format(commonDateLayout))[0]
+
+	return strings.Contains(nowStr, date)
 
 }
 

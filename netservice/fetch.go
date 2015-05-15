@@ -31,7 +31,6 @@ func getTimeoutHttpClient() *http.Client {
 				deadline := time.Now().Add(25 * time.Second)
 				c, err := net.DialTimeout(netw, addr, time.Second*20)
 				if err != nil {
-					log.Println("搞毛！！！")
 					return nil, err
 				}
 				c.SetDeadline(deadline)
@@ -45,14 +44,13 @@ func getTimeoutHttpClient() *http.Client {
 }
 
 // MakeXlsUrl combine the date and the symbol which is stock code to an xls file download url.
-func MakeXlsRecords(symbol, date string) (record string) {
+func MakeXlsRecords(symbol, date string) string {
 
 	rec, isPanic := doMakeXlsRecords(symbol, date)
 	for isPanic {
 		rec, isPanic = doMakeXlsRecords(symbol, date)
 	}
-	record = rec
-	return
+	return rec
 
 }
 
@@ -148,14 +146,31 @@ func MakeStockCurrentQuote(stockcode string) []string {
 }
 
 //
-func MakeStockLastdayClosePrice(stockcode, currentday string) (lastdayPrice float32) {
+func MakeStockLastdayClosePrice(stockcode, currentday string) float32 {
+
+	if utils.IsToday(currentday) {
+		return getTodayLastdayPrice(stockcode)
+	} else {
+		return getHistoryLastdayPrice(stockcode, currentday)
+	}
+
+}
+
+func getTodayLastdayPrice(stockcode string) float32 {
+
+	infos := MakeStockCurrentQuote(stockcode)
+	thePrice, _ := strconv.ParseFloat(infos[1], 32)
+	return float32(thePrice)
+
+}
+
+func getHistoryLastdayPrice(stockcode, currentday string) float32 {
 
 	price, isPanic := doMakeStockLastdayClosePrice(stockcode, currentday)
 	for isPanic {
 		price, isPanic = doMakeStockLastdayClosePrice(stockcode, currentday)
 	}
-	lastdayPrice = price
-	return
+	return price
 
 }
 

@@ -15,6 +15,7 @@ func parseFileToStringArray() (contentArray []string) {
 	utils.CheckError(err)
 
 	contentArray = strings.Split(string(contents), "\n")
+	contentArray = contentArray[:len(contentArray)-1]
 	return
 
 }
