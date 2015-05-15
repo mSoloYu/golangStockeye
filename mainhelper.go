@@ -7,9 +7,11 @@ import (
 	"./utils"
 )
 
-func parseFileToStringArray(filename string) (contentArray []string) {
+const stockcodeFilename = "stock_choose.txt"
 
-	contents, err := ioutil.ReadFile(filename)
+func parseFileToStringArray() (contentArray []string) {
+
+	contents, err := ioutil.ReadFile(stockcodeFilename)
 	utils.CheckError(err)
 
 	contentArray = strings.Split(string(contents), "\n")

@@ -3,8 +3,25 @@ package utils
 import (
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 )
+
+func ParseCmdFlag() (hasCmdFlag bool, tranDateArray []string) {
+
+	hasCmdFlag = false
+	tranDateArray = make([]string, 0)
+
+	sizeArgs := len(os.Args)
+	if sizeArgs == 1 {
+		return
+	}
+
+	hasCmdFlag = true
+	tranDateArray = GetDateArray(ParseDateWithIntFmt(os.Args[1]))
+	return
+
+}
 
 func ParseFileToStringArray(filename string) (contentArray []string) {
 

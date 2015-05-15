@@ -11,20 +11,19 @@ import (
 	"./utils"
 )
 
-//const stockcodeFilename = "stock_a.txt"
-const stockcodeFilename = "stock_choose.txt"
-
 var stockcodeArray []string
 
 func init() {
 
 	runtime.GOMAXPROCS(5)
 
-	stockcodeArray = parseFileToStringArray(stockcodeFilename)
+	stockcodeArray = parseFileToStringArray()
 	//stockcodeArray = stockcodeArray[2020:len(stockcodeArray)]
 }
 
 func main() {
+
+	hasCmdFlag, settedDateArray := utils.ParseCmdFlag()
 
 	var stockcodeWg sync.WaitGroup
 	var stockcodeArrayWg sync.WaitGroup
@@ -42,10 +41,15 @@ func main() {
 
 		mongodb.ConnectToStockTranCollection(stockcode)
 
-		// 获取首日上市日期
-		// 获取交易日期数组
-		dateArray := utils.GetDateArray(
-			mongodb.FindStockinfoOpenSaleDate(stockcode))
+		var dateArray []string
+		if hasCmdFlag {
+			dateArray = settedDateArray
+		} else {
+			// 获取首日上市日期
+			// 获取交易日期数组
+			dateArray = utils.GetDateArray(
+				mongodb.FindStockinfoOpenSaleDate(stockcode))
+		}
 		unCompletedCounter = len(dateArray)
 
 		log.Printf("%4d - %s", idx, stockcode)

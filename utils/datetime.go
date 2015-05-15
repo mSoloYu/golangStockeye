@@ -50,11 +50,16 @@ func ParseDateWithIntFmt(intFmtDate string) time.Time {
 func generateNextDateChannel(startDate time.Time, ch chan string, wg sync.WaitGroup) {
 
 	oneday, _ := time.ParseDuration("24h")
+	negOneday, _ := time.ParseDuration("-24h")
 
 	wg.Add(1)
 	defer wg.Done()
 
 	now := time.Now()
+	if !(now.Hour() > 18 && now.Minute() > 15) {
+		now = now.Add(negOneday)
+	}
+
 	nowStr := strings.Fields(now.Format("2006-01-02 15:04:05"))[0]
 	log.Println("生成的日期截止于: ", nowStr)
 
