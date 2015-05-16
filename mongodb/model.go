@@ -1,10 +1,5 @@
 package mongodb
 
-import (
-	"strconv"
-	"strings"
-)
-
 type Stock struct {
 	SimpleName               string
 	Code                     string
@@ -45,6 +40,77 @@ type Stock struct {
 	ContactPerson            string
 }
 
+type HolderStruct struct {
+	Name       string
+	Vol        int64
+	Percentage float32
+}
+
+type MainStruct struct {
+	StopDate   int
+	NumHolder  int
+	EvenVol    int
+	MainHolder []HolderStruct
+}
+
+type StockMainHolder struct {
+	Code      string
+	FetchDate int
+	Main      []MainStruct
+}
+
+type PublicStruct struct {
+	StopDate     int
+	PublicHolder []HolderStruct
+}
+
+type StockPublicHolder struct {
+	Code      string
+	FetchDate int
+	Public    []PublicStruct
+}
+
+type StockBigDeal struct {
+	Code   string
+	Date   int
+	Deal   []float32
+	Buyer  string
+	Saller string
+}
+
+type StockMarginTrading struct {
+	Code          string
+	Date          int
+	MarginTrading []int64
+}
+
+type FundingStruct struct {
+	Name string
+	Type string
+	Vol  int64
+}
+
+type FundingDetailStruct struct {
+	Name      string
+	Code      string
+	VolDetail []int
+}
+
+type StockFunding struct {
+	Code             string
+	Date             int
+	FundingCounting  []int
+	VolCounting      []int
+	TenFundingChange []FundingStruct
+	FundingDetail    []FundingDetailStruct
+}
+
+type StockMore struct {
+	Code                 string
+	StandardIndustryRank int
+	IncomeRank           int
+}
+
 type FifteenMinuteTran struct {
 	Time     string
 	Count    []int // tranCount, priceChangeCount
@@ -64,67 +130,4 @@ type StockTran struct {
 	VolMoney   []int64
 	Fifteen    []FifteenMinuteTran
 	EachPrices []EachPriceTran
-}
-
-func makeStockModel(stockArray []string) *Stock {
-
-	stock := new(Stock)
-
-	stock.SimpleName = strings.TrimSpace(stockArray[1])
-	stock.Code = strings.TrimSpace(stockArray[3])
-	stock.FullName = strings.TrimSpace(stockArray[5])
-	stock.EnglishName = strings.TrimSpace(stockArray[7])
-	stock.OldName = strings.TrimSpace(stockArray[9])
-	stock.PublishDate = parseInt(stockArray[11], "-")
-	stock.ForIndustry = strings.TrimSpace(stockArray[13])
-	stock.ForStockConcept = strings.Split(strings.TrimSpace(stockArray[15]), "、")
-	stock.Area = strings.TrimSpace(stockArray[17])
-	stock.LegalOwner = strings.TrimSpace(stockArray[19])
-	stock.IndependentDirector = strings.Split(strings.TrimSpace(stockArray[21]), "、")
-	stock.AdvisoryOrga = strings.TrimSpace(stockArray[23])
-	stock.AccountingOrga = strings.TrimSpace(stockArray[25])
-	stock.SecuritiesRepresentative = strings.TrimSpace(stockArray[27])
-
-	stock.Capital = parseFloat(strings.Replace(stockArray[29], ",", "", -1), "万元")
-
-	stock.RegisterAddr = strings.TrimSpace(stockArray[31])
-	stock.RateOfTax = parseFloat(stockArray[33], "%")
-
-	stock.BusinessAddr = strings.TrimSpace(stockArray[35])
-	stock.MainProduct = strings.TrimSpace(stockArray[37])
-	stock.IssueDate = parseInt(stockArray[39], "-")
-	stock.OpenSaleDate = parseInt(stockArray[41], "-")
-	stock.WhichMarket = strings.TrimSpace(stockArray[43])
-	stock.SecurityType = strings.TrimSpace(stockArray[45])
-
-	stock.OutstandingCapitalStock = parseFloat(strings.Replace(stockArray[47], ",", "", -1), "万股")
-	stock.TotalCapitalStock = parseFloat(strings.Replace(stockArray[49], ",", "", -1), "万股")
-
-	stock.SallerAgent = strings.TrimSpace(stockArray[51])
-	stock.IssuePrice = parseFloat(stockArray[53], "元")
-	stock.OpenSaleOpenPrice = parseFloat(stockArray[55], "元")
-	stock.OpenSalePriceRate = parseFloat(stockArray[57], "%")
-	stock.OpenSaleExchangeRage = parseFloat(stockArray[59], "%")
-	stock.SpecialIssue = strings.TrimSpace(stockArray[61])
-	stock.IssuePE = parseFloat(stockArray[63], "倍")
-	stock.CurrentPE = parseFloat(stockArray[65], "倍")
-	stock.Tel = strings.TrimSpace(stockArray[67])
-	stock.Email = strings.TrimSpace(stockArray[71])
-	stock.WebSite = strings.TrimSpace(stockArray[73])
-	stock.ContactPerson = strings.TrimSpace(stockArray[75])
-
-	return stock
-
-}
-
-func parseInt(targetStr, replaceStr string) int {
-	val, _ := strconv.Atoi(strings.Replace(strings.TrimSpace(targetStr), replaceStr, "", -1))
-	return val
-}
-
-func parseFloat(targetStr, replaceStr string) float32 {
-
-	val, _ := strconv.ParseFloat(strings.Replace(strings.TrimSpace(targetStr), replaceStr, "", -1), 32)
-	return float32(val)
-
 }

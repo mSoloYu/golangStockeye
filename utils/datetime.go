@@ -2,6 +2,7 @@ package utils
 
 import (
 	"log"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -41,6 +42,17 @@ func GetDateArray(startDate time.Time) []string {
 	dateArray = dateArray[0:idx]
 
 	return dateArray
+}
+
+func GetTodayWithIntFmt() int {
+
+	now := time.Now()
+	nowStr := strings.Fields(now.Format(intDateLayout))[0]
+
+	dateIntFmt, _ := strconv.Atoi(nowStr)
+
+	return dateIntFmt
+
 }
 
 func ParseDateWithIntFmt(intFmtDate string) time.Time {

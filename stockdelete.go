@@ -21,7 +21,7 @@ func init() {
 
 func main() {
 
-	_, settedDateArray := utils.ParseCmdFlag()
+	_, settedDateArray := utils.ParseCmdFlagToDateFlag()
 
 	for _, stockcode := range stockcodeArray {
 		log.Println(stockcode)

@@ -9,9 +9,12 @@ import (
 )
 
 const stockdb = "stock"
-const stockcollection = "stock_info"
 const stocktrandb = "stocktran"
-const stocktrancollection = "stock_tran"
+
+const stockCollection = "stock_info"
+const stockPublicHolderCollection = "stock_public_holder"
+const stockMainHolderCollection = "stock_main_holder"
+const stockBigDealCollection = "stock_big_deal"
 
 var stockUser *mgo.DialInfo = new(mgo.DialInfo)
 var mgoSession *mgo.Session
@@ -58,7 +61,21 @@ func connectToStockDbReadonly(db string) {
 
 func connectToStockCollection() *mgo.Collection {
 
-	mgoCollection := mgoSession.DB("").C(stockcollection)
+	mgoCollection := mgoSession.DB("").C(stockCollection)
+	return mgoCollection
+
+}
+
+func connectToStockPublicHolderCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(stockPublicHolderCollection)
+	return mgoCollection
+
+}
+
+func connectToStockMainHolderCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(stockMainHolderCollection)
 	return mgoCollection
 
 }

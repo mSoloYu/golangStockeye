@@ -9,7 +9,7 @@ const stockcodeFilename = "stock_a.txt"
 var stockcodeArray []string
 
 func init() {
-	stockcodeArray = parseFileToStringArray(stockcodeFilename)
+	stockcodeArray = parseFileToStringArrayAll(stockcodeFilename)
 	//stockcodeArray = stockcodeArray[2020:len(stockcodeArray)]
 }
 

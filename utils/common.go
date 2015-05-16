@@ -7,7 +7,7 @@ import (
 	"strings"
 )
 
-func ParseCmdFlag() (hasCmdFlag bool, tranDateArray []string) {
+func ParseCmdFlagToDateArray() (hasCmdFlag bool, tranDateArray []string) {
 
 	hasCmdFlag = false
 	tranDateArray = make([]string, 0)

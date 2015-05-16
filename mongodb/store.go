@@ -3,7 +3,6 @@ package mongodb
 import (
 	"log"
 
-	"../netservice"
 	"gopkg.in/mgo.v2"
 )
 
@@ -12,13 +11,44 @@ var mgoColl *mgo.Collection
 func StoreStockModel(stockcodeArr []string) {
 
 	connectToStockDbReadwrite(stockdb)
+	coll := connectToStockCollection()
 
 	for idx, stockcode := range stockcodeArr {
-		stockArray := netservice.MakeStockInfoArray(stockcode)
-		stock := makeStockModel(stockArray)
+		stockDoc := makeStockModel(stockcode)
 
-		log.Printf("%4d - %s : %s", idx, stock.Code, stock.FullName)
-		connectToStockCollection().Insert(stock)
+		log.Printf("%4d - %s : %s", idx, stockDoc.Code, stockDoc.FullName)
+		coll.Insert(stockDoc)
+	}
+
+}
+
+func StoreStockPublicHolderModel(stockcodeArr []string) {
+
+	connectToStockDbReadwrite(stockdb)
+	coll := connectToStockPublicHolderCollection()
+
+	for idx, stockcode := range stockcodeArr {
+		publicHolderDoc := makeStockPublicHolderDoc(stockcode)
+
+		log.Printf("----> %4d, %s", idx, stockcode)
+		coll.Insert(publicHolderDoc)
+	}
+
+}
+
+func StoreStockMainHolderModel(stockcodeArr []string) {
+
+	//connectToStockDbReadwrite(stockdb)
+	//coll := connectToStockMainHolderCollection()
+
+	for _, stockcode := range stockcodeArr {
+		stockcode = "601668"
+		makeStockMainHolderDoc(stockcode)
+		break
+		//mainHolderDoc := makeStockMainHolderDoc(stockcode)
+
+		//log.Printf("----> %4d, %s", idx, stockcode)
+		//coll.Insert(mainHolderDoc)
 	}
 
 }

@@ -21,9 +21,9 @@ func TestMakeXlsRecords(t *testing.T) {
 	}
 }
 
-func TestMakeStockInfo(t *testing.T) {
+func TestMakeStockBasic(t *testing.T) {
 
-	stockInfoArray := MakeStockInfoArray("601668")
+	stockInfoArray := MakeStockBasicArray("601668")
 	for _, stockInfoItem := range stockInfoArray {
 		log.Println(stockInfoItem)
 	}
