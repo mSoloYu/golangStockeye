@@ -86,8 +86,13 @@ func doMakeStockMainHoldersArray(stockcode string) (stockInfoArray []string, isP
 					if (jdx-12)%5 == 0 {
 						strItem = re.ReplaceAllString(strItem, "")
 					}
-					strVal := stockInfoArray[idx]
-					stockInfoArray[idx] = strVal + "_" + strItem
+					if jdx == 1 {
+						strItem = strings.Replace(strItem, "-", "", -1)
+						stockInfoArray[idx] = strItem
+					} else {
+						strVal := stockInfoArray[idx]
+						stockInfoArray[idx] = strVal + "|" + strItem
+					}
 				}
 				jdx++
 			})
@@ -124,25 +129,26 @@ func doMakeStockPublicHoldersArray(stockcode string) (stockInfoArray []string, i
 		table.Find("tr").Each(func(j int, tr *goquery.Selection) {
 
 			val := tr.Text()
-			output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-			str := strings.TrimSpace(output)
-			rec := re.ReplaceAllString(str, "_")
+			str := strings.TrimSpace(val)
+			output := re.ReplaceAllString(str, "|")
+			rec, _ := iconv.ConvertString(output, "gbk", "utf-8")
 
 			if j > 0 {
 
 				if strings.Contains(rec, "截止日期") {
 					jdx = 0
 					idx++
-					stockInfoArray[idx] = strings.Replace(strings.Split(rec, "_")[1], "-", "", -1)
+					stockInfoArray[idx] = strings.Replace(strings.Split(rec, "|")[1], "-", "", -1)
 					//log.Println(stockInfoArray[idx-1])
 				} else {
 					if len(rec) > 0 &&
 						!strings.HasPrefix(rec, "公告日期") &&
 						!strings.HasPrefix(rec, "编号") {
-						holdersArr := strings.Split(rec, "_")
+						holdersArr := strings.Split(output, "|")
 						item := stockInfoArray[idx]
-						stockInfoArray[idx] = item + "_" +
-							holdersArr[1] + "_" + holdersArr[2] + "_" + holdersArr[3]
+						holderName, _ := iconv.ConvertString(holdersArr[1], "gbk", "utf-8")
+						stockInfoArray[idx] = item + "|" +
+							holderName + "|" + holdersArr[2] + "|" + holdersArr[3]
 					}
 				}
 				jdx++

@@ -28,6 +28,9 @@ func StoreStockPublicHolderModel(stockcodeArr []string) {
 	coll := connectToStockPublicHolderCollection()
 
 	for idx, stockcode := range stockcodeArr {
+		//stockcode = "601188"
+		//makeStockPublicHolderDoc(stockcode)
+		//break
 		publicHolderDoc := makeStockPublicHolderDoc(stockcode)
 
 		log.Printf("----> %4d, %s", idx, stockcode)
@@ -38,17 +41,17 @@ func StoreStockPublicHolderModel(stockcodeArr []string) {
 
 func StoreStockMainHolderModel(stockcodeArr []string) {
 
-	//connectToStockDbReadwrite(stockdb)
-	//coll := connectToStockMainHolderCollection()
+	connectToStockDbReadwrite(stockdb)
+	coll := connectToStockMainHolderCollection()
 
-	for _, stockcode := range stockcodeArr {
-		stockcode = "601668"
-		makeStockMainHolderDoc(stockcode)
-		break
-		//mainHolderDoc := makeStockMainHolderDoc(stockcode)
+	for idx, stockcode := range stockcodeArr {
+		//stockcode = "000018"
+		//makeStockMainHolderDoc(stockcode)
+		//break
+		mainHolderDoc := makeStockMainHolderDoc(stockcode)
 
-		//log.Printf("----> %4d, %s", idx, stockcode)
-		//coll.Insert(mainHolderDoc)
+		log.Printf("----> %4d, %s", idx, stockcode)
+		coll.Insert(mainHolderDoc)
 	}
 
 }

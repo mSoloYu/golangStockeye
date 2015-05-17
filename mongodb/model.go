@@ -40,6 +40,8 @@ type Stock struct {
 	ContactPerson            string
 }
 
+// ------------------------------
+
 type HolderStruct struct {
 	Name       string
 	Vol        int64
@@ -59,6 +61,8 @@ type StockMainHolder struct {
 	Main      []MainStruct
 }
 
+// ------------------------------
+
 type PublicStruct struct {
 	StopDate     int
 	PublicHolder []HolderStruct
@@ -70,6 +74,8 @@ type StockPublicHolder struct {
 	Public    []PublicStruct
 }
 
+// ------------------------------
+
 type StockBigDeal struct {
 	Code   string
 	Date   int
@@ -78,11 +84,15 @@ type StockBigDeal struct {
 	Saller string
 }
 
+// ------------------------------
+
 type StockMarginTrading struct {
 	Code          string
 	Date          int
 	MarginTrading []int64
 }
+
+// ------------------------------
 
 type FundingStruct struct {
 	Name string
@@ -105,11 +115,15 @@ type StockFunding struct {
 	FundingDetail    []FundingDetailStruct
 }
 
+// ------------------------------
+
 type StockMore struct {
 	Code                 string
 	StandardIndustryRank int
 	IncomeRank           int
 }
+
+// ------------------------------
 
 type FifteenMinuteTran struct {
 	Time     string
