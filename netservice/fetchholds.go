@@ -1,8 +1,7 @@
 package netservice
 
 import (
-	"log"
-	//"os/exec"
+	//"log"
 	"regexp"
 	"strings"
 
@@ -12,8 +11,6 @@ import (
 
 const HolderTypeMain = 1
 const HolderTypePublic = 2
-
-type holderFunc func(a string) ([]string, bool)
 
 //
 func MakeStockHoldersArray(stockcode string, holderType int) []string {
@@ -163,22 +160,4 @@ func doMakeStockPublicHoldersArray(stockcode string) (stockInfoArray []string, i
 
 	return
 
-}
-
-func getGoQueryDocument(urlModel, stockcode, strPanic string) *goquery.Document {
-
-	urlStr := strings.Replace(urlModel, "------", stockcode, -1)
-	res, err := getTimeoutHttpClient().Get(urlStr)
-	if err != nil {
-		panic(strPanic)
-	}
-
-	doc, _ := goquery.NewDocumentFromResponse(res)
-
-	return doc
-
-}
-
-func printLog(e interface{}) {
-	log.Println("出错：", e)
 }

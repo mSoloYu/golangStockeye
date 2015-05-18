@@ -97,7 +97,7 @@ type StockMarginTrading struct {
 type FundingStruct struct {
 	Name string
 	Type string
-	Vol  int64
+	Vol  int
 }
 
 type FundingDetailStruct struct {
@@ -109,6 +109,7 @@ type FundingDetailStruct struct {
 type StockFunding struct {
 	Code             string
 	Date             int
+	FetchDate        int
 	FundingCounting  []int
 	VolCounting      []int
 	TenFundingChange []FundingStruct
@@ -117,10 +118,18 @@ type StockFunding struct {
 
 // ------------------------------
 
-type StockMore struct {
-	Code                 string
-	StandardIndustryRank int
-	IncomeRank           int
+type StockAccounting struct {
+	Code            string
+	Date            int
+	IndustryClass   []string
+	Ranking         []int
+	StopDate        int
+	EarningPerShare []float32
+	Naps            []float32
+	SalesRevenue    []float32
+	Profit          []float32
+	GrossProfitSale []float32
+	Others          []float32
 }
 
 // ------------------------------

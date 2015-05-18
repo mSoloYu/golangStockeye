@@ -20,6 +20,8 @@ func main() {
 
 	fmt.Println("主要股东 ----> 1")
 	fmt.Println("流通股东 ----> 2")
+	fmt.Println("简要财务 ----> 3")
+	fmt.Println("基金持仓 ----> 4")
 	fmt.Println("\n请选择要执行的功能，多选项时请使用一个逗号分隔：")
 	fmt.Scanln(&cmd)
 
@@ -35,6 +37,14 @@ func main() {
 			fmt.Println("开始执行 ----> 流通股东")
 			//stockcodeArray = stockcodeArray[2071:len(stockcodeArray)]
 			mongodb.StoreStockPublicHolderModel(stockcodeArray)
+		case menu == 3:
+			fmt.Println("开始执行 ----> 简要财务")
+			//stockcodeArray = stockcodeArray[460:len(stockcodeArray)]
+			mongodb.StoreStockAccountingModel(stockcodeArray)
+		case menu == 4:
+			fmt.Println("开始执行 ----> 基金持仓")
+			//stockcodeArray = stockcodeArray[2053:len(stockcodeArray)]
+			mongodb.StoreStockFundingModel(stockcodeArray)
 		}
 	}
 

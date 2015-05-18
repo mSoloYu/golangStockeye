@@ -14,6 +14,8 @@ const stocktrandb = "stocktran"
 const stockCollection = "stock_info"
 const stockPublicHolderCollection = "stock_public_holder"
 const stockMainHolderCollection = "stock_main_holder"
+const stockAccountingCollection = "stock_accounting"
+const stockFundingCollection = "stock_funding"
 const stockBigDealCollection = "stock_big_deal"
 
 var stockUser *mgo.DialInfo = new(mgo.DialInfo)
@@ -76,6 +78,20 @@ func connectToStockPublicHolderCollection() *mgo.Collection {
 func connectToStockMainHolderCollection() *mgo.Collection {
 
 	mgoCollection := mgoSession.DB("").C(stockMainHolderCollection)
+	return mgoCollection
+
+}
+
+func connectToStockAccountingCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(stockAccountingCollection)
+	return mgoCollection
+
+}
+
+func connectToStockFundingCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(stockFundingCollection)
 	return mgoCollection
 
 }

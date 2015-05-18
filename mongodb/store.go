@@ -56,6 +56,43 @@ func StoreStockMainHolderModel(stockcodeArr []string) {
 
 }
 
+func StoreStockAccountingModel(stockcodeArr []string) {
+
+	connectToStockDbReadwrite(stockdb)
+	coll := connectToStockAccountingCollection()
+
+	for idx, stockcode := range stockcodeArr {
+		//stockcode = "600023"
+		//makeStockAccountingDoc(stockcode)
+		//break
+		accountingDoc := makeStockAccountingDoc(stockcode)
+
+		log.Printf("----> %4d, %s", idx, stockcode)
+		coll.Insert(accountingDoc)
+	}
+
+}
+
+func StoreStockFundingModel(stockcodeArr []string) {
+
+	connectToStockDbReadwrite(stockdb)
+	coll := connectToStockFundingCollection()
+
+	for idx, stockcode := range stockcodeArr {
+		//stockcode = "600023"
+		//makeStockFundingDoc(stockcode)
+		//break
+		fundingDoc := makeStockFundingDoc(stockcode)
+		if fundingDoc.Date != -1 {
+			coll.Insert(fundingDoc)
+			log.Printf("----> %4d, %s", idx, stockcode)
+		} else {
+			log.Printf("----> %4d, %s -- skip", idx, stockcode)
+		}
+	}
+
+}
+
 func ConnectToStockTranCollection(stockcode string) {
 	connectToStockDbReadwrite(stocktrandb)
 	mgoColl = connectToStockTranCollection(stockcode)
