@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	iconv "github.com/djimenez/iconv-go"
 )
 
 type holderFunc func(a string) ([]string, bool)
@@ -22,14 +23,16 @@ const historyQuoteUrlModel = "http://vip.stock.finance.sina.com.cn/quotes_servic
 	"/view/vMS_tradehistory.php?symbol=--------&date=**********"
 const mainHoldersUrlModel = "http://vip.stock.finance.sina.com.cn/corp/go.php/vCI_StockHolder/stockid/------.phtml"
 const publicHoldersUrlModel = "http://vip.stock.finance.sina.com.cn/corp/go.php/vCI_CirculateStockHolder/stockid/------.phtml"
-const bigDealUrlModel = "http://q.stock.sohu.com/cn/------/dzjy.shtml"
-const marginTradingUrlModel = "http://q.stock.sohu.com/app2/mpssTrade.up?code=------&sd=&ed="
-
-//const internalTradingUrlModel = "http://q.stock.sohu.com/app2/rpsholder.up?code=------&sd=&ed=&type=date&dir=1"
 
 const rankingUrlModel = "http://stockdata.stock.hexun.com/------.shtml"
 const accountingUrlModel = "http://q.stock.sohu.com/cn/------/index.shtml"
 const fundingsUrlModel = "http://q.stock.sohu.com/cn/------/jjcc.shtml"
+
+const bigDealUrlModel = "http://q.stock.sohu.com/cn/------/dzjy.shtml"
+const marginTradingUrlModel = "http://q.stock.sohu.com/app2/mpssTrade.up?code=------&sd=&ed=&p=*"
+
+//const internalTradingUrlModel = "http://q.stock.sohu.com/app2/rpsholder.up?code=------&sd=&ed=&type=date&dir=1"
+const moneyFlowUrlModel = "http://app.finance.ifeng.com/hq/trade/stock_zijin.php?code=--------&begin_day=**********&end_day=**********"
 
 func getTimeoutHttpClient() *http.Client {
 
@@ -58,6 +61,16 @@ func getUsedStockcode(stockcode string) (usedStockcode string) {
 	} else {
 		usedStockcode = "sh" + stockcode
 	}
+
+	return
+
+}
+
+func getUtfTextFromGoQuerySelection(selection *goquery.Selection) (text string) {
+
+	val := selection.Text()
+	output, _ := iconv.ConvertString(val, "gbk", "utf-8")
+	text = strings.TrimSpace(output)
 
 	return
 

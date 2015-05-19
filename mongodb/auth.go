@@ -17,6 +17,7 @@ const stockMainHolderCollection = "stock_main_holder"
 const stockAccountingCollection = "stock_accounting"
 const stockFundingCollection = "stock_funding"
 const stockBigDealCollection = "stock_big_deal"
+const stockMarginTradingCollection = "stock_margin_trading"
 
 var stockUser *mgo.DialInfo = new(mgo.DialInfo)
 var mgoSession *mgo.Session
@@ -92,6 +93,13 @@ func connectToStockAccountingCollection() *mgo.Collection {
 func connectToStockFundingCollection() *mgo.Collection {
 
 	mgoCollection := mgoSession.DB("").C(stockFundingCollection)
+	return mgoCollection
+
+}
+
+func connectToStockMarginTradingCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(stockMarginTradingCollection)
 	return mgoCollection
 
 }

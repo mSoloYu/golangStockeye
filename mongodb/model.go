@@ -88,8 +88,8 @@ type StockBigDeal struct {
 
 type StockMarginTrading struct {
 	Code          string
-	Date          int
-	MarginTrading []int64
+	FetchDate     int
+	MarginTrading [][7]int64
 }
 
 // ------------------------------

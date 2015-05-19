@@ -50,34 +50,34 @@ func makeStockFundingDoc(stockcode string) StockFunding {
 	mTenFundingArr[9].Name = fundingInfos[19]
 
 	mTenFundingArr[0].Type = fundingInfos[20]
-	vol := getIntVal(fundingInfos[21])
+	vol := utils.GetIntVal(fundingInfos[21])
 	mTenFundingArr[0].Vol = vol
 	mTenFundingArr[1].Type = fundingInfos[22]
-	vol = getIntVal(fundingInfos[23])
+	vol = utils.GetIntVal(fundingInfos[23])
 	mTenFundingArr[1].Vol = vol
 	mTenFundingArr[2].Type = fundingInfos[24]
-	vol = getIntVal(fundingInfos[25])
+	vol = utils.GetIntVal(fundingInfos[25])
 	mTenFundingArr[2].Vol = vol
 	mTenFundingArr[3].Type = fundingInfos[26]
-	vol = getIntVal(fundingInfos[27])
+	vol = utils.GetIntVal(fundingInfos[27])
 	mTenFundingArr[3].Vol = vol
 	mTenFundingArr[4].Type = fundingInfos[28]
-	vol = getIntVal(fundingInfos[29])
+	vol = utils.GetIntVal(fundingInfos[29])
 	mTenFundingArr[4].Vol = vol
 	mTenFundingArr[5].Type = fundingInfos[30]
-	vol = getIntVal(fundingInfos[31])
+	vol = utils.GetIntVal(fundingInfos[31])
 	mTenFundingArr[5].Vol = vol
 	mTenFundingArr[6].Type = fundingInfos[32]
-	vol = getIntVal(fundingInfos[33])
+	vol = utils.GetIntVal(fundingInfos[33])
 	mTenFundingArr[6].Vol = vol
 	mTenFundingArr[7].Type = fundingInfos[34]
-	vol = getIntVal(fundingInfos[35])
+	vol = utils.GetIntVal(fundingInfos[35])
 	mTenFundingArr[7].Vol = vol
 	mTenFundingArr[8].Type = fundingInfos[36]
-	vol = getIntVal(fundingInfos[37])
+	vol = utils.GetIntVal(fundingInfos[37])
 	mTenFundingArr[8].Vol = vol
 	mTenFundingArr[9].Type = fundingInfos[38]
-	vol = getIntVal(fundingInfos[39])
+	vol = utils.GetIntVal(fundingInfos[39])
 	mTenFundingArr[9].Vol = vol
 	mSf.TenFundingChange = mTenFundingArr
 
@@ -92,9 +92,9 @@ func makeStockFundingDoc(stockcode string) StockFunding {
 		}
 		mFundDetailArr[idx].Name = fundingInfos[counter]
 		mFundDetailArr[idx].Code = fundingInfos[counter+1]
-		totalShares = getIntVal(fundingInfos[counter+2])
-		changeShares = getIntVal(fundingInfos[counter+3])
-		percentageOfFunding = getIntVal(fundingInfos[counter+5])
+		totalShares = utils.GetIntVal(fundingInfos[counter+2])
+		changeShares = utils.GetIntVal(fundingInfos[counter+3])
+		percentageOfFunding = utils.GetIntVal(fundingInfos[counter+5])
 		mFundDetailArr[idx].VolDetail = []int{totalShares, changeShares, percentageOfFunding}
 		counter += 6
 		idx++
@@ -104,9 +104,4 @@ func makeStockFundingDoc(stockcode string) StockFunding {
 	//log.Println("--->", mSf)
 	return mSf
 
-}
-
-func getIntVal(str string) int {
-	vol, _ := strconv.Atoi(str)
-	return vol
 }

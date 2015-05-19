@@ -2,11 +2,9 @@ package netservice
 
 import (
 	"net/http"
-	"strings"
 
 	"../utils"
 	"github.com/PuerkitoBio/goquery"
-	iconv "github.com/djimenez/iconv-go"
 )
 
 // MakeStockBasicArray fetch and parse the webpage for stock information like name, code, issue price, and pe, etc.
@@ -24,9 +22,7 @@ func MakeStockBasicArray(stockcode string) []string {
 	doc.Find(".tab_xtable").Each(func(i int, table *goquery.Selection) {
 
 		table.Find("td").Each(func(j int, td *goquery.Selection) {
-			val := td.Text()
-			output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-			output = strings.TrimSpace(output)
+			output := getUtfTextFromGoQuerySelection(td)
 			stockBasicArray[idx] = output
 			idx++
 		})

@@ -93,6 +93,23 @@ func StoreStockFundingModel(stockcodeArr []string) {
 
 }
 
+func StoreStockMarginTradingModel(stockcodeArr []string) {
+
+	connectToStockDbReadwrite(stockdb)
+	coll := connectToStockMarginTradingCollection()
+
+	for idx, stockcode := range stockcodeArr {
+		//stockcode = "000001"
+		//makeStockMarginTradingDoc(stockcode)
+		//break
+		marginTradingDoc := makeStockMarginTradingDoc(stockcode)
+
+		log.Printf("----> %4d, %s", idx, stockcode)
+		coll.Insert(marginTradingDoc)
+	}
+
+}
+
 func ConnectToStockTranCollection(stockcode string) {
 	connectToStockDbReadwrite(stocktrandb)
 	mgoColl = connectToStockTranCollection(stockcode)

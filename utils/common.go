@@ -4,8 +4,19 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strconv"
 	"strings"
 )
+
+func GetIntVal(str string) int {
+	intVal, _ := strconv.Atoi(str)
+	return intVal
+}
+
+func GetInt64Val(str string) int64 {
+	intVal, _ := strconv.ParseInt(str, 10, 64)
+	return intVal
+}
 
 func ParseCmdFlagToDateArray() (hasCmdFlag bool, tranDateArray []string) {
 
@@ -31,6 +42,16 @@ func ParseFileToStringArray(filename string) (contentArray []string) {
 	contentArray = strings.Split(string(contents), "\n")
 	return
 
+}
+
+func ParseFloatByReplace(targetStr, replaceStr string) float32 {
+	floatVal, _ := strconv.ParseFloat(strings.Replace(strings.TrimSpace(targetStr), replaceStr, "", -1), 32)
+	return float32(floatVal)
+}
+
+func ParseIntByReplace(targetStr, replaceStr string) int {
+	intVal, _ := strconv.Atoi(strings.Replace(strings.TrimSpace(targetStr), replaceStr, "", -1))
+	return intVal
 }
 
 func CheckError(err error) {

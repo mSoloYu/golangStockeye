@@ -5,20 +5,19 @@ import (
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
-	iconv "github.com/djimenez/iconv-go"
 )
 
 //
 func MakeStockAccountingArray(stockcode string) (rankingInfos, accountingInfos []string) {
 
-	rankingInfos = doMakeStockInfosArray(stockcode, doMakeStockRankingArray)
-	accountingInfos = doMakeStockInfosArray(stockcode, doMakeStockAccountingArray)
+	rankingInfos = doMakeStockAccountingInfosArray(stockcode, doMakeStockRankingArray)
+	accountingInfos = doMakeStockAccountingInfosArray(stockcode, doMakeStockAccountingArray)
 
 	return
 
 }
 
-func doMakeStockInfosArray(stockcode string, opFunc holderFunc) []string {
+func doMakeStockAccountingInfosArray(stockcode string, opFunc holderFunc) []string {
 
 	recArr, isPanic := opFunc(stockcode)
 	for isPanic {
@@ -50,9 +49,7 @@ func doMakeStockRankingArray(stockcode string) (stockInfoArray []string, isPanic
 
 		table.Find("td").Each(func(j int, td *goquery.Selection) {
 
-			val := td.Text()
-			output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-			str := strings.TrimSpace(output)
+			str := getUtfTextFromGoQuerySelection(td)
 			switch {
 			case j == 24:
 				fallthrough
@@ -99,9 +96,7 @@ func doMakeStockAccountingArray(stockcode string) (stockInfoArray []string, isPa
 		if i < 1 {
 			table.Find("td").Each(func(j int, td *goquery.Selection) {
 
-				val := td.Text()
-				output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-				str := strings.TrimSpace(output)
+				str := getUtfTextFromGoQuerySelection(td)
 				if j == 0 {
 					stockInfoArray[idx] = strings.Replace(str, "-", "", -1)
 					idx++

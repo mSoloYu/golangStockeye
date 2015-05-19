@@ -57,9 +57,8 @@ func doMakeStockMainHoldersArray(stockcode string) (stockInfoArray []string, isP
 		table.Find("tbody").Each(func(j int, tbody *goquery.Selection) {
 
 			tbody.Find("td").Each(func(k int, td *goquery.Selection) {
-				val := td.Text()
-				output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-				str := strings.TrimSpace(output)
+
+				str := getUtfTextFromGoQuerySelection(td)
 				strItem := re.ReplaceAllString(str, "")
 				if strings.HasPrefix(strItem, "截至日期") {
 					jdx = 0

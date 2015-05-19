@@ -63,9 +63,7 @@ func doMakeStockFundingArray(stockcode string) (stockInfoArray []string, isPanic
 		div.Find("table").Each(func(j int, table *goquery.Selection) {
 			table.Find("td").Each(func(k int, td *goquery.Selection) {
 
-				val := td.Text()
-				output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-				str := strings.TrimSpace(output)
+				str := getUtfTextFromGoQuerySelection(td)
 				if len(str) == 0 {
 					str = "0"
 				}
@@ -82,9 +80,7 @@ func doMakeStockFundingArray(stockcode string) (stockInfoArray []string, isPanic
 	doc.Find(".innerStr2ColumnBR").Each(func(i int, div *goquery.Selection) {
 		div.Find("table").Each(func(j int, table *goquery.Selection) {
 			table.Find("th").Each(func(k int, th *goquery.Selection) {
-				val := th.Text()
-				output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-				str := strings.TrimSpace(output)
+				str := getUtfTextFromGoQuerySelection(th)
 				stockInfoArray[idx] = str
 				//log.Println("--->", str, "--->", jdx)
 				idx++
@@ -104,9 +100,7 @@ func doMakeStockFundingArray(stockcode string) (stockInfoArray []string, isPanic
 		jdx = 0
 		div.Find("table").Each(func(j int, table *goquery.Selection) {
 			table.Find("td").Each(func(k int, td *goquery.Selection) {
-				val := td.Text()
-				output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-				str := strings.TrimSpace(output)
+				str := getUtfTextFromGoQuerySelection(td)
 				stockInfoArray[idx] = str
 				//log.Println("--->", str, "--->", jdx)
 				idx++
@@ -127,9 +121,7 @@ func doMakeStockFundingArray(stockcode string) (stockInfoArray []string, isPanic
 	doc.Find(".tableJ").Each(func(i int, table *goquery.Selection) {
 		table.Find("td").Each(func(j int, td *goquery.Selection) {
 
-			val := td.Text()
-			output, _ := iconv.ConvertString(val, "gbk", "utf-8")
-			str := strings.TrimSpace(output)
+			str := getUtfTextFromGoQuerySelection(td)
 			if (j-5)%6 == 0 {
 				str = strings.Replace(strings.Replace(str, ".", "", -1), "%", "", -1)
 			}
