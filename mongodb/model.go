@@ -77,9 +77,14 @@ type StockPublicHolder struct {
 // ------------------------------
 
 type StockBigDeal struct {
-	Code   string
+	Code      string
+	FetchDate int
+	BigDeal   []BigDealStruct
+}
+
+type BigDealStruct struct {
 	Date   int
-	Deal   []float32
+	Deal   []float32 // price, vol(万), money(万)
 	Buyer  string
 	Saller string
 }
@@ -124,12 +129,12 @@ type StockAccounting struct {
 	IndustryClass   []string
 	Ranking         []int
 	StopDate        int
-	EarningPerShare []float32
-	Naps            []float32
-	SalesRevenue    []float32
-	Profit          []float32
-	GrossProfitSale []float32
-	Others          []float32
+	EarningPerShare []float32 // 每股收益
+	Naps            []float32 // 每股净资产
+	SalesRevenue    []float32 // 主营收入
+	Profit          []float32 // 净利润
+	GrossProfitSale []float32 // 销售毛利率
+	Others          []float32 // 每股资本公积金、每股未分配利润、净资产收益率
 }
 
 // ------------------------------

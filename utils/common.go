@@ -18,6 +18,11 @@ func GetInt64Val(str string) int64 {
 	return intVal
 }
 
+func GetFloat32Val(str string) float32 {
+	floatVal, _ := strconv.ParseFloat(str, 32)
+	return float32(floatVal)
+}
+
 func ParseCmdFlagToDateArray() (hasCmdFlag bool, tranDateArray []string) {
 
 	hasCmdFlag = false

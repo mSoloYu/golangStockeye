@@ -104,6 +104,13 @@ func connectToStockMarginTradingCollection() *mgo.Collection {
 
 }
 
+func connectToStockBigDealCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(stockBigDealCollection)
+	return mgoCollection
+
+}
+
 func connectToStockTranCollection(coll string) *mgo.Collection {
 
 	mgoCollection := mgoSession.DB("").C(coll)
