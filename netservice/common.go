@@ -12,6 +12,7 @@ import (
 )
 
 type holderFunc func(a string) ([]string, bool)
+type fundtranFunc func(a string) ([]string, []string, bool)
 
 const stockBasicSize = 78
 const strSymbol = "&symbol="
@@ -26,13 +27,21 @@ const publicHoldersUrlModel = "http://vip.stock.finance.sina.com.cn/corp/go.php/
 
 const rankingUrlModel = "http://stockdata.stock.hexun.com/------.shtml"
 const accountingUrlModel = "http://q.stock.sohu.com/cn/------/index.shtml"
-const fundingsUrlModel = "http://q.stock.sohu.com/cn/------/jjcc.shtml"
+const stockFundingUrlModel = "http://q.stock.sohu.com/cn/------/jjcc.shtml"
 
 const bigDealUrlModel = "http://q.stock.sohu.com/cn/------/dzjy.shtml"
 const marginTradingUrlModel = "http://q.stock.sohu.com/app2/mpssTrade.up?code=------&sd=&ed=&p=*"
 
 //const internalTradingUrlModel = "http://q.stock.sohu.com/app2/rpsholder.up?code=------&sd=&ed=&type=date&dir=1"
 const moneyFlowUrlModel = "http://app.finance.ifeng.com/hq/trade/stock_zijin.php?code=--------&begin_day=**********&end_day=**********"
+
+// 十大重仓
+const fundUrlModelBySohu = "http://q.fund.sohu.com/------/index.shtml?code=------"
+
+// 投资行业分布明细
+const fundUrlModelBySina = "http://finance.sina.com.cn/fund/quotes/------/bc.shtml"
+
+const fundbasicUrlModel = "http://q.fund.sohu.com/q/gk.php?code=------"
 
 func getTimeoutHttpClient() *http.Client {
 

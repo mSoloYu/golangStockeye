@@ -17,7 +17,7 @@ func init() {
 
 	runtime.GOMAXPROCS(5)
 
-	stockcodeArray = parseFileToStringArray()
+	stockcodeArray = parseFileToStringArray(typestock)
 	//stockcodeArray = stockcodeArray[2020:len(stockcodeArray)]
 }
 

@@ -11,7 +11,7 @@ import (
 var stockcodeArray []string
 
 func init() {
-	stockcodeArray = parseFileToStringArrayAll()
+	stockcodeArray = parseFileToStringArrayAll(typestock)
 }
 
 func main() {

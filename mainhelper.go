@@ -7,12 +7,23 @@ import (
 	"./utils"
 )
 
+const fundcodeAllFilename = "fund_all.txt"
+const fundcodeFilename = "fund_choose.txt"
 const stockcodeAllFilename = "stock_a.txt"
 const stockcodeFilename = "stock_choose.txt"
 
-func parseFileToStringArray() (contentArray []string) {
+const typestock = 1
+const typefund = 2
 
-	contents, err := ioutil.ReadFile(stockcodeFilename)
+func parseFileToStringArray(parseType int) (contentArray []string) {
+
+	var filename string
+	if parseType == 1 {
+		filename = stockcodeFilename
+	} else {
+		filename = fundcodeFilename
+	}
+	contents, err := ioutil.ReadFile(filename)
 	utils.CheckError(err)
 
 	contentArray = strings.Split(string(contents), "\n")
@@ -21,9 +32,15 @@ func parseFileToStringArray() (contentArray []string) {
 
 }
 
-func parseFileToStringArrayAll() (contentArray []string) {
+func parseFileToStringArrayAll(parseType int) (contentArray []string) {
 
-	contents, err := ioutil.ReadFile(stockcodeAllFilename)
+	var filename string
+	if parseType == 1 {
+		filename = stockcodeAllFilename
+	} else {
+		filename = fundcodeAllFilename
+	}
+	contents, err := ioutil.ReadFile(filename)
 	utils.CheckError(err)
 
 	contentArray = strings.Split(string(contents), "\n")

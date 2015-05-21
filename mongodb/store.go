@@ -6,8 +6,6 @@ import (
 	"gopkg.in/mgo.v2"
 )
 
-var mgoColl *mgo.Collection
-
 func StoreStockModel(stockcodeArr []string) {
 
 	connectToStockDbReadwrite(stockdb)

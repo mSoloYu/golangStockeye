@@ -10,6 +10,7 @@ import (
 
 const stockdb = "stock"
 const stocktrandb = "stocktran"
+const funddb = "fund"
 
 const stockCollection = "stock_info"
 const stockPublicHolderCollection = "stock_public_holder"
@@ -18,19 +19,22 @@ const stockAccountingCollection = "stock_accounting"
 const stockFundingCollection = "stock_funding"
 const stockBigDealCollection = "stock_big_deal"
 const stockMarginTradingCollection = "stock_margin_trading"
+const fundCollection = "fund_info"
+const fundtranCollection = "fund_tran"
 
-var stockUser *mgo.DialInfo = new(mgo.DialInfo)
+var authUser *mgo.DialInfo = new(mgo.DialInfo)
 var mgoSession *mgo.Session
+var mgoColl *mgo.Collection
 
 func init() {
 
-	stockUser.Addrs = []string{"192.168.1.105:9988"}
-	stockUser.Direct = false
-	stockUser.Timeout = time.Minute
-	stockUser.FailFast = true
-	//stockUser.Source
-	//stockUser.Service
-	//stockUser.Mechanism
+	authUser.Addrs = []string{"192.168.1.105:9988"}
+	authUser.Direct = false
+	authUser.Timeout = time.Minute
+	authUser.FailFast = true
+	//authUser.Source
+	//authUser.Service
+	//authUser.Mechanism
 	//DialServer func(addr *ServerAddr) (net.Conn, error)
 }
 
@@ -40,11 +44,11 @@ func connectToStockDbReadwrite(db string) {
 		mgoSession.Close()
 	}
 
-	stockUser.Username = "stockrw"
-	stockUser.Password = "STOCK@#!34406eyeZz"
-	stockUser.Database = db
+	authUser.Username = "stockrw"
+	authUser.Password = "STOCK@#!34406eyeZz"
+	authUser.Database = db
 
-	session, err := mgo.DialWithInfo(stockUser)
+	session, err := mgo.DialWithInfo(authUser)
 	utils.CheckError(err)
 	mgoSession = session
 
@@ -52,11 +56,39 @@ func connectToStockDbReadwrite(db string) {
 
 func connectToStockDbReadonly(db string) {
 
-	stockUser.Username = "stockro"
-	stockUser.Password = "123456"
-	stockUser.Database = db
+	authUser.Username = "stockro"
+	authUser.Password = "123456"
+	authUser.Database = db
 
-	session, err := mgo.DialWithInfo(stockUser)
+	session, err := mgo.DialWithInfo(authUser)
+	utils.CheckError(err)
+	mgoSession = session
+
+}
+
+func connectToFundDbReadwrite(db string) {
+
+	if mgoSession != nil {
+		mgoSession.Close()
+	}
+
+	authUser.Username = "fundrw"
+	authUser.Password = "STOCK@#!34406eyeZz"
+	authUser.Database = db
+
+	session, err := mgo.DialWithInfo(authUser)
+	utils.CheckError(err)
+	mgoSession = session
+
+}
+
+func connectToFundDbReadonly(db string) {
+
+	authUser.Username = "fundro"
+	authUser.Password = "123456"
+	authUser.Database = db
+
+	session, err := mgo.DialWithInfo(authUser)
 	utils.CheckError(err)
 	mgoSession = session
 
@@ -114,6 +146,20 @@ func connectToStockBigDealCollection() *mgo.Collection {
 func connectToStockTranCollection(coll string) *mgo.Collection {
 
 	mgoCollection := mgoSession.DB("").C(coll)
+	return mgoCollection
+
+}
+
+func connectToFundCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(fundCollection)
+	return mgoCollection
+
+}
+
+func connectToFundTranCollection() *mgo.Collection {
+
+	mgoCollection := mgoSession.DB("").C(fundtranCollection)
 	return mgoCollection
 
 }

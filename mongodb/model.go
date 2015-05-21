@@ -159,3 +159,42 @@ type StockTran struct {
 	Fifteen    []FifteenMinuteTran
 	EachPrices []EachPriceTran
 }
+
+// ------------------------------
+
+type FundBasic struct {
+	Code             string
+	FetchDate        int
+	LegalName        string
+	Name             string
+	InvestType       string
+	Date             []int   // 成立日期、募集起始日、募集截止日、日常申购起始日、日常赎回起始日
+	SharesVol        []int64 // 万份，总募集规模、实际募集规模、管理人参与规模、参与资金利息、最近总份额
+	Manager          string
+	FundManager      string
+	FundHolder       string
+	InvestStyle      string
+	RateStructure    string
+	ResultCmp        string
+	InvestTarget     string
+	InvestPhilosophy string
+	InvestRange      string
+	InvestStrategy   string
+	InvestStandard   string
+	RiskFeature      string
+	RiskManageTool   string
+}
+
+type FundHoldingStockBond struct {
+	Name             string
+	Position         float32 // 持仓占比
+	PercentageChange float32 // 占比变动
+	NumFund          int
+}
+
+type FundTran struct {
+	Code        string
+	Date        int
+	FetchDate   int
+	FundHolding []FundHoldingStockBond
+}
