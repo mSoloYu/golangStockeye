@@ -32,7 +32,7 @@ func main() {
 		switch {
 		case menu == 1:
 			fmt.Println("开始执行 ----> 基金资料")
-			fundcodeArray = fundcodeArray[470:len(fundcodeArray)]
+			fundcodeArray = fundcodeArray[646:len(fundcodeArray)]
 			mongodb.StoreFundBasicModel(fundcodeArray)
 		case menu == 2:
 			fmt.Println("开始执行 ----> 基金持仓")

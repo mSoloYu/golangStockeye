@@ -23,7 +23,7 @@ func init() {
 
 func main() {
 
-	hasCmdFlag, settedDateArray := utils.ParseCmdFlag()
+	hasCmdFlag, settedDateArray := utils.ParseCmdFlagToDateArray()
 
 	var stockcodeWg sync.WaitGroup
 	var stockcodeArrayWg sync.WaitGroup
